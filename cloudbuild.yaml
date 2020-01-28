@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/cloud-builders/mvn'
+  args: ['install']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/spring-boot-container/spring-boot-container-test', '.']
+  timeout: 500s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/spring-boot-container/spring-boot-container-test']
+options:
+  machineType: 'N1_STANDARD-1' 
+timeout: 1000s 
