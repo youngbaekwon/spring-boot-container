@@ -7,5 +7,5 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/spring-boot-container/spring-boot-container-test']
 options:
-  machineType: 'N1-STANDARD-1' 
+  machineType: 'UNSPECIFIED' 
 timeout: 1000s 
