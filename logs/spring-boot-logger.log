@@ -1,0 +1,27 @@
+2020-01-28 15:32:22,527 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringBootDemoApplication on cs-6000-devshell-vm-8db651f3-b517-4312-a1c4-d24e4848a792 with PID 1117 (/home/youngbae_kwon/gke_test/spring-boot-demo/target/classes started by youngbae_kwon in /home/youngbae_kwon/gke_test/spring-boot-demo)
+2020-01-28 15:32:22,532 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2020-01-28 15:32:22,598 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-01-28 15:32:22,598 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-01-28 15:32:23,705 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2020-01-28 15:32:23,718 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2020-01-28 15:32:23,720 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2020-01-28 15:32:23,720 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.29]
+2020-01-28 15:32:23,775 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2020-01-28 15:32:23,776 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1177 ms
+2020-01-28 15:32:24,039 INFO org.hibernate.validator.internal.util.Version [restartedMain] HV000001: Hibernate Validator 6.0.18.Final
+2020-01-28 15:32:24,299 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2020-01-28 15:32:24,353 INFO org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping [restartedMain] Adding welcome page template: index
+2020-01-28 15:32:24,413 WARN org.thymeleaf.templatemode.TemplateMode [restartedMain] [THYMELEAF][restartedMain] Template Mode 'HTML5' is deprecated. Using Template Mode 'HTML' instead.
+2020-01-28 15:32:24,459 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2020-01-28 15:32:24,481 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2020-01-28 15:32:24,524 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2020-01-28 15:32:24,527 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringBootDemoApplication in 2.548 seconds (JVM running for 3.302)
+2020-01-28 15:32:30,233 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2020-01-28 15:34:37,823 INFO org.springframework.boot.StartupInfoLogger [main] Starting SpringBootDemoApplicationTests on cs-6000-devshell-vm-8db651f3-b517-4312-a1c4-d24e4848a792 with PID 1221 (started by youngbae_kwon in /home/youngbae_kwon/gke_test/spring-boot-demo)
+2020-01-28 15:34:37,825 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-01-28 15:34:39,841 INFO org.hibernate.validator.internal.util.Version [main] HV000001: Hibernate Validator 6.0.18.Final
+2020-01-28 15:34:40,735 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-01-28 15:34:40,937 INFO org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping [main] Adding welcome page template: index
+2020-01-28 15:34:41,171 WARN org.thymeleaf.templatemode.TemplateMode [main] [THYMELEAF][main] Template Mode 'HTML5' is deprecated. Using Template Mode 'HTML' instead.
+2020-01-28 15:34:41,395 INFO org.springframework.boot.StartupInfoLogger [main] Started SpringBootDemoApplicationTests in 4.062 seconds (JVM running for 5.928)
+2020-01-28 15:34:41,896 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
