@@ -2,10 +2,15 @@ steps:
 - name: 'gcr.io/cloud-builders/mvn'
   args: ['install']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/spring-boot-container/spring-boot-container-test', '.']
+  args: ['build', '-t', 'gcr.io/rugged-precept-258803/spring-boot-container-test', '.']
   timeout: 500s
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/spring-boot-container/spring-boot-container-test']
+  args: ['push', 'gcr.io/rugged-precept-258803/spring-boot-container-test']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['set', 'image', 'deployment/spring-boot-container', 'spring-boot-container-test-sha256=gcr.io/rugged-precept-258803/spring-boot-container-test', '-n', 'spring-boot']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=spring-boot-container-cluster'
 options:
   machineType: 'UNSPECIFIED' 
 timeout: 1000s 
