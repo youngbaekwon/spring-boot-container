@@ -16,7 +16,7 @@ spec:
         app: spring-boot
     spec:
       containers:
-      - image: gcr.io/rugged-precept-258803/spring-boot-container-test:lastest
+      - image: gcr.io/rugged-precept-258803/spring-boot-container-test:latest
         imagePullPolicy: Always
         name: spring-boot
 
