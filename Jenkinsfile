@@ -73,14 +73,14 @@ spec:
     stage('Push Docker Image to Docker Registry') {
 		steps {
 			container('docker'){
-				withCredentials([[$class: 'UsernamePasswordMultiBinding',
-				credentialsId: env.DOCKER_CREDENTIALS_ID,
-				usernameVariable: 'USERNAME',
-				passwordVariable: 'PASSWORD']]) {
-					docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
+				//withCredentials([[$class: 'UsernamePasswordMultiBinding',
+				//credentialsId: env.DOCKER_CREDENTIALS_ID,
+				//usernameVariable: 'USERNAME',
+				//passwordVariable: 'PASSWORD']]) {
+				//	docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
 						sh("docker push ${IMAGE_TAG}")
-					}
-				}
+				//	}
+				//}
 			}
 		}
     }
