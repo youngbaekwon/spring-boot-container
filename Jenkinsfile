@@ -82,7 +82,7 @@ spec:
     stage('Push Docker Image to Docker Registry') {
 		steps {
 			container('docker'){
-			  docker.withRegistory('https://us.gcr.io', 'gcr:[8fd6a433391278a16a55965929d7b45246d24dde]') {
+			  withCredentials('https://us.gcr.io', 'gcr:[my-bg-lab]') {
               			echo "Pushing image To GCR"
               			sh "docker push ${IMAGE_TAG}"
           		  }
