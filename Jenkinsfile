@@ -82,12 +82,23 @@ spec:
     stage('Push Docker Image to Docker Registry') {
 		steps {
 			container('docker'){
+				withCredentials([file(credentialsId: 'gcr', variable: 'GC_KEY')]){
+              				sh "cat '$GC_KEY' | docker login -u _json_key --password-stdin https://us.gcr.io"
+              				sh "gcloud auth activate-service-account --key-file='$GC_KEY'"
+              				sh "gcloud auth configure-docker"
+              				GLOUD_AUTH = sh (
+                    				script: 'gcloud auth print-access-token',
+                    				returnStdout: true
+                			).trim()
+              				echo "Pushing image To GCR"
+              				sh "docker push ${IMAGE_TAG}"
+          			}
 				//withCredentials([[$class: 'UsernamePasswordMultiBinding',
 				//credentialsId: env.DOCKER_CREDENTIALS_ID,
 				//usernameVariable: 'USERNAME',
 				//passwordVariable: 'PASSWORD']]) {
 				//	docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
-						sh("docker push ${IMAGE_TAG}")
+						//sh("docker push ${IMAGE_TAG}")
 				//	}
 				//}
 			}
