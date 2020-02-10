@@ -2,6 +2,7 @@ pipeline {
   environment {
     PROJECT = "my-bg-lab"
     APP_NAME = "spring-boot-app"
+    REPOSITORY_NAME = "spring-boot-container"
     CLUSTER = "jenkins-cluster-1"
     CLUSTER_ZONE = "us-east1-a"
     IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:${env.BUILD_NUMBER}"
@@ -53,7 +54,7 @@ spec:
 	stage('Build with Maven') {
 		steps {
 			container('maven'){
-				dir ("./${app1_name}") {
+				dir ("./${REPOSITORY_NAME}") {
 					sh ("mvn -B -DskipTests clean package")
 				}
 			}
