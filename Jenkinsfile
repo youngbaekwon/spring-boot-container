@@ -28,15 +28,22 @@ spec:
     - cat
     tty: true 
   - name: docker
-    image: docker
+    image: docker:18.06.1
     command:
     - cat
     tty: true
+    volumnMounts:
+      - name: docker
+        mountPath: /var/run/docker.sock
   - name: kubectl
     image: gcr.io/cloud-builders/kubectl
     command:
     - cat
     tty: true
+  volumes: 
+    - name: docker
+      hostPath: 
+        path: /var/run/docker.sock
 """
 }
   }
