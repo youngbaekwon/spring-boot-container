@@ -1,46 +1,92 @@
 pipeline {
-
   environment {
-    registry = "https://gcr.io/rugged-precept-258803/spring-boot-container-test"
-    dockerImage = ""
+    PROJECT = "my-bg-lab"
+    APP_NAME = "spring-boot-app"
+    CLUSTER = "jenkins-cluster-1"
+    CLUSTER_ZONE = "us-east1-a"
+    IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:${env.BUILD_NUMBER}"
+    JENKINS_CRED = "${PROJECT}"
   }
-
-  agent any
-
-  stages {
-
-    stage('Checkout Source') {
-      steps {
-        git 'https://github.com/youngbaekwon/spring-boot-container.git'
-      }
-    }
-
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
-
-    stage('Push Image') {
-      steps{
-        script {
-          docker.withRegistry( "" ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-
-    stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "myapp.yaml", kubeconfigId: "mykubeconfig")
-        }
-      }
-    }
-
-  }
-
+  agent {
+    kubernetes {
+      label 'spring-boot-app'
+      defaultContainer 'jnlp'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+labels:
+  component: ci
+spec:
+  # Use service account that can deploy to all namespaces
+  serviceAccountName: cd-jenkins
+  containers:
+  - name: maven
+    image: maven:3-alpine
+    command:
+    - cat
+    tty: true 
+ - name: gcloud
+    image: gcr.io/cloud-builders/gcloud
+    command:
+    - cat
+    tty: true
+  - name: kubectl
+    image: gcr.io/cloud-builders/kubectl
+    command:
+    - cat
+    tty: true
+"""
 }
+  }
+  
+	//Stage 1: Checkout Code from Git
+	stage('Application Code Checkout from Git') {
+		checkout scm
+	}
+	
+	//Stage 2: Build with mvn
+	stage('Build with Maven') {
+        container('maven'){
+            dir ("./${app1_name}") {
+                sh ("mvn -B -DskipTests clean package")
+            }
+        }
+    }
+	
+	//Stage 3: Build Docker Image    
+    stage('Build Docker Image') {
+        container('docker'){
+            sh("docker build -t ${IMAGE_TAG} .")
+        }
+    }
+	
+	//Stage 4: Push the Image to a Docker Registry
+    stage('Push Docker Image to Docker Registry') {
+        container('docker'){
+            withCredentials([[$class: 'UsernamePasswordMultiBinding',
+            credentialsId: env.DOCKER_CREDENTIALS_ID,
+            usernameVariable: 'USERNAME',
+            passwordVariable: 'PASSWORD']]) {
+                docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
+                    sh("docker push ${IMAGE_TAG}")
+                }
+            }
+        }
+    }
+	
+	//Stage 5: Deploy Application on K8s
+    stage('Deploy Application on K8s') {
+        container('kubectl'){
+            withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
+            serverUrl: env.K8s_SERVER_URL,
+            contextName: env.K8s_CONTEXT_NAME,
+            clusterName: env.K8s_CLUSTER_NAME]){
+                sh("kubectl apply -f myapp.yml")
+
+            }     
+        }
+   }
+  
+}
+
