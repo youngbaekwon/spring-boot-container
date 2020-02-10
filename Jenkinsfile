@@ -40,53 +40,65 @@ spec:
 }
   }
   
+  stages {
+  
 	//Stage 1: Checkout Code from Git
 	stage('Application Code Checkout from Git') {
-		checkout scm
+		steps {
+			checkout scm
+		}
 	}
 	
 	//Stage 2: Build with mvn
 	stage('Build with Maven') {
-        container('maven'){
-            dir ("./${app1_name}") {
-                sh ("mvn -B -DskipTests clean package")
-            }
-        }
+		steps {
+			container('maven'){
+				dir ("./${app1_name}") {
+					sh ("mvn -B -DskipTests clean package")
+				}
+			}
+		}
     }
 	
 	//Stage 3: Build Docker Image    
     stage('Build Docker Image') {
-        container('docker'){
-            sh("docker build -t ${IMAGE_TAG} .")
-        }
+		steps {
+			container('docker'){
+				sh("docker build -t ${IMAGE_TAG} .")
+			}
+		}
     }
 	
 	//Stage 4: Push the Image to a Docker Registry
     stage('Push Docker Image to Docker Registry') {
-        container('docker'){
-            withCredentials([[$class: 'UsernamePasswordMultiBinding',
-            credentialsId: env.DOCKER_CREDENTIALS_ID,
-            usernameVariable: 'USERNAME',
-            passwordVariable: 'PASSWORD']]) {
-                docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
-                    sh("docker push ${IMAGE_TAG}")
-                }
-            }
-        }
+		steps {
+			container('docker'){
+				withCredentials([[$class: 'UsernamePasswordMultiBinding',
+				credentialsId: env.DOCKER_CREDENTIALS_ID,
+				usernameVariable: 'USERNAME',
+				passwordVariable: 'PASSWORD']]) {
+					docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
+						sh("docker push ${IMAGE_TAG}")
+					}
+				}
+			}
+		}
     }
 	
 	//Stage 5: Deploy Application on K8s
     stage('Deploy Application on K8s') {
-        container('kubectl'){
-            withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
-            serverUrl: env.K8s_SERVER_URL,
-            contextName: env.K8s_CONTEXT_NAME,
-            clusterName: env.K8s_CLUSTER_NAME]){
-                sh("kubectl apply -f myapp.yml")
+		steps {
+			container('kubectl'){
+				withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
+				serverUrl: env.K8s_SERVER_URL,
+				contextName: env.K8s_CONTEXT_NAME,
+				clusterName: env.K8s_CLUSTER_NAME]){
+					sh("kubectl apply -f myapp.yml")
 
-            }     
-        }
-   }
-  
+				}     
+			}
+		}
+	}
+  }
 }
 
