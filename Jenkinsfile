@@ -55,7 +55,7 @@ spec:
 		steps {
 			container('maven'){
 				dir ("./${REPOSITORY_NAME}") {
-					sh ("mvn -B -DskipTests clean package")
+					sh ("mvn -Dmaven.test.skip=true clean package")
 				}
 			}
 		}
