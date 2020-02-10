@@ -32,7 +32,8 @@ spec:
     command:
     - cat
     tty: true
-    volumnMounts:
+    imagePullPolicy: Always
+    volumeMounts:
       - name: docker
         mountPath: /var/run/docker.sock
   - name: kubectl
