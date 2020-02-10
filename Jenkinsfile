@@ -26,7 +26,7 @@ spec:
     command:
     - cat
     tty: true 
- - name: gcloud
+  - name: gcloud
     image: gcr.io/cloud-builders/gcloud
     command:
     - cat
