@@ -54,9 +54,9 @@ spec:
 	stage('Build with Maven') {
 		steps {
 			container('maven'){
-				dir ("./${REPOSITORY_NAME}") {
+				//dir ("./${REPOSITORY_NAME}") {
 					sh ("mvn -Dmaven.test.skip=true clean package")
-				}
+				//}
 			}
 		}
     }
