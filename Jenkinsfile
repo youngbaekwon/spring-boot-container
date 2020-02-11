@@ -7,6 +7,7 @@ pipeline {
     CLUSTER_ZONE = "us-east1-a"
     IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:${env.BUILD_NUMBER}"
     JENKINS_CRED = "${PROJECT}"
+    GOOGLE_SERVICE_ACCOUNT_KEY = credentials('service_account_key1');
   }
   agent {
     kubernetes {
@@ -36,11 +37,6 @@ spec:
     volumeMounts:
       - name: docker
         mountPath: /var/run/docker.sock
-  - name: gcloud
-    image: gcr.io/cloud-builders/gcloud
-    command:
-    - cat
-    tty: true
   - name: kubectl
     image: gcr.io/cloud-builders/kubectl
     command:
@@ -87,11 +83,9 @@ spec:
     stage('Push Docker Image to Docker Registry') {
 		steps {
 			
-              		echo "Pushing image To GCR"
-			sh "gcloud --version"
-			//container('docker'){
-              			//echo "Pushing image To GCR"
-              			//sh "docker push ${IMAGE_TAG}"
+			container('docker'){
+              			echo "Pushing image To GCR"
+              			sh "docker push ${IMAGE_TAG}"
 				//withCredentials([[$class: 'UsernamePasswordMultiBinding',
 				//credentialsId: env.DOCKER_CREDENTIALS_ID,
 				//usernameVariable: 'USERNAME',
@@ -100,7 +94,7 @@ spec:
 						//sh("docker push ${IMAGE_TAG}")
 				//	}
 				//}
-			//}
+			}
 		}
     }
 	
