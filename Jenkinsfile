@@ -76,7 +76,7 @@ spec:
 			
 			container('gcloud'){
               			echo "Pushing image To GCR"
-              			sh "gcloud builds submit -t ${IMAGE_TAG}"
+              			sh "gcloud container builds submit -t ${IMAGE_TAG}"
 				//withCredentials([[$class: 'UsernamePasswordMultiBinding',
 				//credentialsId: env.DOCKER_CREDENTIALS_ID,
 				//usernameVariable: 'USERNAME',
