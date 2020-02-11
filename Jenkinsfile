@@ -32,7 +32,7 @@ spec:
     command:
     - cat
     tty: true
-  - name: gcloud
+  - name: kubectl
     image: gcr.io/cloud-builders/kubectl
     command:
     - cat
