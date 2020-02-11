@@ -36,6 +36,11 @@ spec:
     volumeMounts:
       - name: docker
         mountPath: /var/run/docker.sock
+  - name: gcloud
+    image: gcr.io/cloud-builders/gcloud
+    command:
+    - cat
+    tty: true
   - name: kubectl
     image: gcr.io/cloud-builders/kubectl
     command:
