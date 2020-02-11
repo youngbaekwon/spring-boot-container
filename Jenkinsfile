@@ -67,7 +67,7 @@ spec:
 			container('docker'){
 				sh("docker build -t ${IMAGE_TAG} .")
 				sh("gcloud auth configure-docker")
-				sh("docker push ${IMAGE_TAG})
+				sh("docker push ${IMAGE_TAG}")
 			}
 		}
     }
