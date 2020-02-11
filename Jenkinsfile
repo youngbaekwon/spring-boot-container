@@ -27,13 +27,13 @@ spec:
     command:
     - cat
     tty: true 
-  - name: gcloud
-    image: gcr.io/cloud-builders/gcloud
+  - name: docker
+    image: docker:18.06.1
     command:
     - cat
     tty: true
-  - name: kubectl
-    image: gcr.io/cloud-builders/kubectl
+  - name: gcloud
+    image: gcr.io/cloud-builders/gcloud
     command:
     - cat
     tty: true
@@ -62,14 +62,17 @@ spec:
     }
 	
 	//Stage 3: Build Docker Image    
-    //stage('Build Docker Image') {
-//		steps {
-//			container('docker'){
-//				sh("docker build -t ${IMAGE_TAG} .")
-//			}
-//		}
- //   }
+    stage('Build Docker Image') {
+		steps {
+			container('docker'){
+				sh("docker build -t ${IMAGE_TAG} .")
+				sh("gcloud auth configure-docker")
+				sh("docker push ${IMAGE_TAG})
+			}
+		}
+    }
 	
+/*
 	//Stage 4: Push the Image to a Docker Registry
     stage('Push Docker Image to Docker Registry') {
 		steps {
@@ -103,6 +106,7 @@ spec:
 			}
 		}
 	}
+*/
   }
 }
 
