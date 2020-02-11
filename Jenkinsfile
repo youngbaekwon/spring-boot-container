@@ -32,11 +32,19 @@ spec:
     command:
     - cat
     tty: true
+    imagePullPolicy: Always
+    volumeMounts:
+      - name: docker
+        mountPath: /var/run/docker.sock
   - name: gcloud
     image: gcr.io/cloud-builders/gcloud
     command:
     - cat
     tty: true
+  volumes:
+    - name: docker
+      hostPath:
+        path: /var/run/docker.sock
 """
 }
   }
