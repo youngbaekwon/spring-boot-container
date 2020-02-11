@@ -81,11 +81,12 @@ spec:
 	//Stage 4: Push the Image to a Docker Registry
     stage('Push Docker Image to Docker Registry') {
 		steps {
-			container('docker'){
-			  withCredentials('https://us.gcr.io', 'gcr:[my-bg-lab]') {
-              			echo "Pushing image To GCR"
-              			sh "docker push ${IMAGE_TAG}"
-          		  }
+			
+              		echo "Pushing image To GCR"
+			sh "gcloud --version"
+			//container('docker'){
+              			//echo "Pushing image To GCR"
+              			//sh "docker push ${IMAGE_TAG}"
 				//withCredentials([[$class: 'UsernamePasswordMultiBinding',
 				//credentialsId: env.DOCKER_CREDENTIALS_ID,
 				//usernameVariable: 'USERNAME',
@@ -94,7 +95,7 @@ spec:
 						//sh("docker push ${IMAGE_TAG}")
 				//	}
 				//}
-			}
+			//}
 		}
     }
 	
